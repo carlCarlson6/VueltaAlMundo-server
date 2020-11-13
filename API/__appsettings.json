@@ -1,0 +1,17 @@
+{
+  "UserMongoSettings": {
+    "CollectionName": "Users",
+    "ConnectionString": "<mongo db connection string>",
+    "DatabaseName": "VueltaAlMundoDB"
+  },
+
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+
+  "AllowedHosts": "*"
+}
