@@ -2,9 +2,9 @@ using System;
 using Domain.Entities;
 using MongoRepository.Settings;
 
-namespace MongoRepository.UserRepo
+namespace MongoRepository.Settings
 {
-    public class UserRepositorySettings : IMongoRepositorySettings<User>
+    public class UserMongoSettings : IMongoRepositorySettings<User>
     {
         public String CollectionName { get; set; }
         public String ConnectionString { get; set; }
