@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Entities;
@@ -20,14 +21,18 @@ namespace MongoRepository.UserRepo
             this.collection = database.GetCollection<UserModel>(settings.CollectionName);
         }
 
-        public Task<List<User>> Read()
+        public async Task<List<User>> Read()
         {
-            throw new NotImplementedException();
+            IAsyncCursor<UserModel> userAsyncCursor = await this.collection.FindAsync(user => true);
+            List<UserModel> usersModel = await userAsyncCursor.ToListAsync();
+            return usersModel.Select(userModel => new User(new Guid(userModel.id), new Email(userModel.email), new Name(userModel.name), new Password(new EncryptedPassword(userModel.password)))).ToList();
         }
 
-        public Task<User> Read(Guid id)
+        public async Task<User> Read(Guid id)
         {
-            throw new NotImplementedException();
+            IAsyncCursor<UserModel> userAsyncCursor = await this.collection.FindAsync(user => user.id == id.ToString());
+            UserModel userFound = await userAsyncCursor.FirstOrDefaultAsync();
+            return new User(new Guid(userFound.id), new Email(userFound.email), new Name(userFound.name), new Password(new EncryptedPassword(userFound.password)));
         }
 
         public async Task<User> Read(Email email)
