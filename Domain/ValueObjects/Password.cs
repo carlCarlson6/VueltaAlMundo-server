@@ -8,16 +8,16 @@ namespace Domain.ValueObjects
     public class Password
     {
         private readonly Regex validationPattern = new Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-        public String Value { get => encryptedPassword.Value; }
-        private readonly EncryptedPassword encryptedPassword;
+        public String Value { get => encrypted.Value; }
+        private readonly EncryptedPassword encrypted;
         
         public Password(String value)
         {
             this.ValidateFormat(value);
-            this.encryptedPassword = new EncryptedPassword(value);
+            this.encrypted = new EncryptedPassword(value);
         }
 
-        public Password(EncryptedPassword encryptedPassword) => this.encryptedPassword = encryptedPassword;
+        public Password(EncryptedPassword encryptedPassword) => this.encrypted = encryptedPassword;
 
         private void ValidateFormat(String passwordString)
         {
