@@ -25,6 +25,12 @@ namespace MongoRepository.UserRepo
         {
             IAsyncCursor<UserModel> userAsyncCursor = await this.collection.FindAsync(user => true);
             List<UserModel> usersModel = await userAsyncCursor.ToListAsync();
+
+            if(usersModel.Count == 0)
+            {
+                return new List<User>();
+            }
+
             return usersModel.Select(userModel => new User(new Guid(userModel.id), new Email(userModel.email), new Name(userModel.name), new Password(new EncryptedPassword(userModel.password)))).ToList();
         }
 
@@ -32,6 +38,12 @@ namespace MongoRepository.UserRepo
         {
             IAsyncCursor<UserModel> userAsyncCursor = await this.collection.FindAsync(user => user.id == id.ToString());
             UserModel userFound = await userAsyncCursor.FirstOrDefaultAsync();
+            
+            if(userFound == null)
+            {
+                return null;
+            }
+            
             return new User(new Guid(userFound.id), new Email(userFound.email), new Name(userFound.name), new Password(new EncryptedPassword(userFound.password)));
         }
 
@@ -39,6 +51,12 @@ namespace MongoRepository.UserRepo
         {
             IAsyncCursor<UserModel> userAsyncCursor = await this.collection.FindAsync(user => user.email == email.Value);
             UserModel userFound = await userAsyncCursor.FirstOrDefaultAsync();
+
+            if(userFound == null)
+            {
+                return null;
+            }
+                
             return new User(new Guid(userFound.id), new Email(userFound.email), new Name(userFound.name), new Password(new EncryptedPassword(userFound.password)));
         }
 
