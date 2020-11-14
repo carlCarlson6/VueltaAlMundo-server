@@ -20,7 +20,7 @@ namespace Domain.Entities
 
         public static User Create(String email, String name, String password)
         {
-            return new User(new Guid(), new Email(email), new Name(name), new Password(password));
+            return new User(Guid.NewGuid(), new Email(email), new Name(name), new Password(password));
         }
 
     }
