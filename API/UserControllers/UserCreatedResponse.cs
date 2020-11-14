@@ -1,6 +1,6 @@
 using System;
 
-namespace Application.UserDTOs
+namespace API.UserControllers
 {
     public class UserCreatedResponse
     {
