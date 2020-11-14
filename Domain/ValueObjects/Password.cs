@@ -31,7 +31,7 @@ namespace Domain.ValueObjects
             }
         }
 
-        private Boolean Verify(String inputPassword)
+        public Boolean Verify(String inputPassword)
         {
             byte[] hashedPasswordBytes = Convert.FromBase64String(this.Value);
             byte[] salt = new byte[16];
@@ -40,9 +40,13 @@ namespace Domain.ValueObjects
             byte[] hash = pbkdf2.GetBytes(20);
             
             for (int i=0; i < 20; i++)
+            {
                 if (hashedPasswordBytes[i+16] != hash[i])
-                    return false;
-            
+                {
+                    throw new PasswordDoesNotMatchException();
+                }
+            }
+
             return true;
         }
 
