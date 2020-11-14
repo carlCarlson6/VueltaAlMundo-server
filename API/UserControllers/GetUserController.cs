@@ -1,4 +1,9 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Application.UserUseCases;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -10,23 +15,27 @@ namespace API.UserControllers
     {
         private readonly ILogger<GetUserController> logger;
         private readonly ListAllUsers allUsers;
-        public GetUserController(ILogger<GetUserController> logger, ListAllUsers allUsers)
+        private readonly GetUser getUser;
+        public GetUserController(ILogger<GetUserController> logger, ListAllUsers allUsers, GetUser getUser)
         {
             this.logger = logger;
             this.allUsers = allUsers;
+            this.getUser = getUser;
         }
 
         [HttpGet]
-        public String Get()
+        public async Task<List<GetUserResponse>> Get()
         {
-            List<User> users = allUsers.ListAll(); 
-            throw new NotImplementedException();
+            List<User> users = await allUsers.Execute(); 
+            return users.Select(user => new GetUserResponse(user)).ToList();
         }
 
         [HttpGet("{id}")]
-        public String Get([FromRoute] Guid id)
+        public async Task<GetUserResponse> Get([FromRoute] Guid id)
         {
-            throw new NotImplementedException();
+            User user = await this.getUser.Execute(id);
+            return new GetUserResponse(user);
         }
+
     }
 }
