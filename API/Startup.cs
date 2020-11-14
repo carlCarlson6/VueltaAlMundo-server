@@ -41,6 +41,7 @@ namespace API
         {
             services.AddSingleton<CreateUser>();
             services.AddSingleton<ListAllUsers>();
+            services.AddSingleton<GetUser>();
         }
         public void ConfigureDomain(IServiceCollection services)
         {
