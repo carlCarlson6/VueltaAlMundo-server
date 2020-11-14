@@ -9,11 +9,17 @@ namespace API.UserControllers
     public class GetUserController : ControllerBase
     {
         private readonly ILogger<GetUserController> logger;
-        public GetUserController(ILogger<GetUserController> logger) => this.logger = logger;
+        private readonly ListAllUsers allUsers;
+        public GetUserController(ILogger<GetUserController> logger, ListAllUsers allUsers)
+        {
+            this.logger = logger;
+            this.allUsers = allUsers;
+        }
 
         [HttpGet]
         public String Get()
         {
+            List<User> users = allUsers.ListAll(); 
             throw new NotImplementedException();
         }
 
