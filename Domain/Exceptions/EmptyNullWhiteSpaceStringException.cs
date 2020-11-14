@@ -6,9 +6,6 @@ namespace Domain.Exceptions
     {
         public override String Message { get => String.Format( "the input {0} is empty, null or white spaces", this.valueFieldName); }
         private readonly String valueFieldName;
-        public EmptyNullWhiteSpaceStringException(String valueFieldName) : base()
-        {
-            this.valueFieldName = valueFieldName;
-        }
+        public EmptyNullWhiteSpaceStringException(String valueFieldName) : base() =>  this.valueFieldName = valueFieldName;
     }
 }
