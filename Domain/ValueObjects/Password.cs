@@ -7,7 +7,7 @@ namespace Domain.ValueObjects
 {
     public class Password
     {
-        private readonly Regex validationPattern = new Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+        private readonly Regex validationRegex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$");
         public String Value { get => encrypted.Value; }
         private readonly EncryptedPassword encrypted;
         
@@ -25,7 +25,7 @@ namespace Domain.ValueObjects
             {
                 throw new EmptyNullWhiteSpaceStringException(nameof(Password));
             }
-            if(!this.validationPattern.IsMatch(passwordString))
+            if(!this.validationRegex.IsMatch(passwordString))
             {
                 throw new NotValidPasswordException();
             }
