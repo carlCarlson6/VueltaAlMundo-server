@@ -8,8 +8,6 @@ namespace MongoRepository.UserRepo
 {
     public class UserModel
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
         public String id {get; set;}
         public String email {get; set;}
         public String name {get; set;}
