@@ -40,11 +40,13 @@ namespace API
         public void ConfigureUseCases(IServiceCollection services)
         {
             services.AddSingleton<CreateUser>();
+            services.AddSingleton<ListAllUsers>();
         }
         public void ConfigureDomain(IServiceCollection services)
         {
             services.AddSingleton<IUserRepository, UserMongoRepository>();
             services.AddSingleton<UserFinder>();
+            services.AddSingleton<CheckNewUser>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
