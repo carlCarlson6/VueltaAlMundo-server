@@ -16,8 +16,6 @@ namespace Domain.Services
             {
                 throw new UserAlreadyExistsException(user.Email);
             }
-            
-            return;
         }
     }
 }
