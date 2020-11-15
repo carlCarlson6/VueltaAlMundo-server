@@ -1,12 +1,11 @@
 
 using System;
 using Domain.Entities;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+using Domain.Repositories;
 
 namespace MongoRepository.UserRepo
 {
-    public class UserModel
+    public class UserModel : IUserModel
     {
         public String id {get; set;}
         public String email {get; set;}
