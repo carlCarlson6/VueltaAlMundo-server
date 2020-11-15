@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Services;
+using Domain.ValueObjects;
 
 namespace Application.UserUseCases
 {
@@ -9,6 +10,6 @@ namespace Application.UserUseCases
     {
         private readonly UserFinder finder;
         public GetUser(UserFinder userFinder) => this.finder = userFinder;
-        public async Task<User> Execute(Guid id) => await this.finder.Find(id);
+        public async Task<User> Execute(UserId id) => await this.finder.Find(id);
     }
 }

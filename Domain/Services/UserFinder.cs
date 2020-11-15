@@ -12,7 +12,7 @@ namespace Domain.Services
         private readonly IUserRepository userRepository;
         public UserFinder(IUserRepository userRepository) => this.userRepository = userRepository;
  
-        public async Task<User> Find(Guid id)
+        public async Task<User> Find(UserId id)
         {
             User user = await this.userRepository.Read(id);
 

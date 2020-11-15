@@ -11,7 +11,7 @@ namespace API.UserControllers.Messages
 
         public GetUserResponse(User user)
         {
-            this.Id = user.Id.ToString();
+            this.Id = user.Id.Value;
             this.Email = user.Email.Value;
             this.Name = user.Name.Value;
         }

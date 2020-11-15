@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using API.UserControllers.Messages;
+using Domain.ValueObjects;
 
 namespace API.UserControllers
 {
@@ -38,7 +39,7 @@ namespace API.UserControllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<GetUserResponse> Get([FromRoute] Guid id)
         {
-            User user = await this.getUser.Execute(id);
+            User user = await this.getUser.Execute(new UserId(id));
             return new GetUserResponse(user);
         }
 

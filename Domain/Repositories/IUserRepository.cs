@@ -9,8 +9,9 @@ namespace Domain.Repositories
     public interface IUserRepository
     {
         Task<int> Save(User user);
-        Task<User> Read(Guid id);
+        Task<User> Read(UserId id);
         Task<User> Read(Email email);
         Task<List<User>> Read();
+    
     }
 }
