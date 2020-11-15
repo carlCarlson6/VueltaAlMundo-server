@@ -1,5 +1,6 @@
 using System.Text;
 using Application.AuthUseCases;
+using Application.RecordUseCases;
 using Application.UserUseCases;
 using Domain.Repositories;
 using Domain.Services;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MongoRepository.RecordRepro;
 using MongoRepository.Settings;
 using MongoRepository.UserRepo;
 
@@ -41,13 +43,17 @@ namespace API
         {
             services.Configure<UserMongoSettings>(Configuration.GetSection(nameof(UserMongoSettings)));
             services.AddSingleton<IMongoRepositorySettings<UserModel>, UserMongoSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<UserMongoSettings>>().Value);
+        
+            services.Configure<RecordMongoSettings>(Configuration.GetSection(nameof(UserMongoSettings)));
+            services.AddSingleton<IMongoRepositorySettings<RecordModel>, RecordMongoSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<RecordMongoSettings>>().Value);
         }
         public void ConfigureUseCases(IServiceCollection services)
         {
             services.AddSingleton<CreateUser>();
             services.AddSingleton<ListAllUsers>();
             services.AddSingleton<GetUser>();
-            services.AddSingleton<Login>();            
+            services.AddSingleton<Login>();    
+            services.AddSingleton<CreateRecord>();        
         }
         public void ConfigureDomain(IServiceCollection services)
         {
