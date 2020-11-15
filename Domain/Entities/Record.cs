@@ -5,12 +5,13 @@ namespace Domain.Entities
 {
     public class Record
     {
-        public Guid Id { get; }
-        public Guid UserId { get; }
+        public RecordId Id { get; }
+        public UserId UserId { get; }
         public Kilometers Kilometers { get; }
         public DateTime CreatedAt { get; }
+        public DateTime StoredAt { get; }
 
-        public Record(Guid id, Guid userId, Kilometers kilometers, DateTime createdAt)
+        public Record(RecordId id, UserId userId, Kilometers kilometers, DateTime createdAt, DateTime StoredAt)
         {
             this.Id = id;
             this.UserId = userId;
@@ -18,9 +19,9 @@ namespace Domain.Entities
             this.CreatedAt = createdAt;
         }
 
-        public static Record Create(Guid userId, Double inputKilometers)
+        public static Record Create(Guid userId, Double inputKilometers, DateTime createdAt)
         {
-            return new Record(Guid.NewGuid(), userId, new Kilometers(inputKilometers), DateTime.Today);
+            return new Record(new RecordId(), new UserId(userId), new Kilometers(inputKilometers), createdAt, DateTime.Today);
         }
 
     }
