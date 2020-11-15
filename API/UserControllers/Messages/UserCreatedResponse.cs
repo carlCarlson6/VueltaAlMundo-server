@@ -1,6 +1,6 @@
 using System;
 
-namespace API.UserControllers
+namespace API.UserControllers.Messages
 {
     public class UserCreatedResponse
     {

@@ -1,7 +1,7 @@
 using System;
 using Domain.ValueObjects;
 
-namespace API.AuthControllers
+namespace API.AuthControllers.Messages
 {
     public class UserLogedResponse
     {

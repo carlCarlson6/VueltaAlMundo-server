@@ -1,7 +1,7 @@
 using System;
 using Domain.Entities;
 
-namespace API.UserControllers
+namespace API.UserControllers.Messages
 {
     public class GetUserResponse
     {
