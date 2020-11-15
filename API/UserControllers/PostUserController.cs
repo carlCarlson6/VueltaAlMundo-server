@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Application.UserDTOs;
 using Application.UserUseCases;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +21,7 @@ namespace API.UserControllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<UserCreatedResponse> Post([FromBody] CreateUserCommand createUserRequest)
         {
             User user = await this.create.Execute(createUserRequest);

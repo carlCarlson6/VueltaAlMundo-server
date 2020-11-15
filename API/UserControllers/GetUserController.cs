@@ -6,6 +6,8 @@ using Application.UserUseCases;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace API.UserControllers
 {
@@ -24,6 +26,7 @@ namespace API.UserControllers
         }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<List<GetUserResponse>> Get()
         {
             List<User> users = await allUsers.Execute(); 
@@ -31,6 +34,7 @@ namespace API.UserControllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<GetUserResponse> Get([FromRoute] Guid id)
         {
             User user = await this.getUser.Execute(id);
