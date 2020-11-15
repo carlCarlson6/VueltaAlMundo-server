@@ -1,6 +1,4 @@
 using System;
-using Domain.Entities;
-using MongoRepository.Settings;
 using MongoRepository.UserRepo;
 
 namespace MongoRepository.Settings
