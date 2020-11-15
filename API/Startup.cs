@@ -1,13 +1,17 @@
+using System.Text;
+using Application.AuthUseCases;
 using Application.UserUseCases;
-using Domain.Entities;
 using Domain.Repositories;
 using Domain.Services;
+using JwtAuthentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using MongoRepository.Settings;
 using MongoRepository.UserRepo;
 
@@ -28,6 +32,7 @@ namespace API
             this.ConfigureDB(services);   
             this.ConfigureUseCases(services);
             this.ConfigureDomain(services);
+            this.ConfigureJwtAuthentication(services);
 
             services.AddControllers();
         }
@@ -42,12 +47,38 @@ namespace API
             services.AddSingleton<CreateUser>();
             services.AddSingleton<ListAllUsers>();
             services.AddSingleton<GetUser>();
+            services.AddSingleton<Login>();            
         }
         public void ConfigureDomain(IServiceCollection services)
         {
             services.AddSingleton<IUserRepository, UserMongoRepository>();
             services.AddSingleton<UserFinder>();
             services.AddSingleton<CheckNewUser>();
+        }
+        public void ConfigureJwtAuthentication(IServiceCollection services)
+        {
+            services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options => 
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["JWT:Issuer"],
+                        ValidAudience = Configuration["JWT:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"])
+                        )
+                    };
+                }
+            );
+        
+            services.Configure<JwtConfiguration>(Configuration.GetSection("JWT"));
+            services.AddSingleton<JwtConfiguration>(serviceProvider => serviceProvider.GetRequiredService<IOptions<JwtConfiguration>>().Value);
+            services.AddSingleton<ITokenGenerator, JwtTokenGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +91,7 @@ namespace API
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
