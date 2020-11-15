@@ -14,7 +14,7 @@ namespace Domain.ValueObjects
         public Password(String value)
         {
             this.ValidateFormat(value);
-            this.encrypted = new EncryptedPassword(value);
+            this.encrypted = this.Encrypt(value);
         }
 
         public Password(EncryptedPassword encryptedPassword) => this.encrypted = encryptedPassword;
@@ -29,6 +29,21 @@ namespace Domain.ValueObjects
             {
                 throw new NotValidPasswordException();
             }
+        }
+
+        private EncryptedPassword Encrypt(String passwordString)
+        {
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+            var keyDerevationFn = new Rfc2898DeriveBytes(passwordString, salt, 100000);
+            byte[] hash = keyDerevationFn.GetBytes(20);
+            
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            return new EncryptedPassword(Convert.ToBase64String(hashBytes));
         }
 
         public Boolean Verify(String inputPassword)
