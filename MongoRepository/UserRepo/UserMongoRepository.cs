@@ -34,9 +34,9 @@ namespace MongoRepository.UserRepo
             return usersModel.Select(userModel => new User(new UserId(userModel.id), new Email(userModel.email), new Name(userModel.name), new Password(new EncryptedPassword(userModel.password)))).ToList();
         }
 
-        public async Task<User> Read(Guid id)
+        public async Task<User> Read(UserId id)
         {
-            IAsyncCursor<UserModel> userAsyncCursor = await this.collection.FindAsync(user => user.id == id.ToString());
+            IAsyncCursor<UserModel> userAsyncCursor = await this.collection.FindAsync(user => user.id == id.Value);
             UserModel userFound = await userAsyncCursor.FirstOrDefaultAsync();
             
             if(userFound == null)
