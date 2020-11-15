@@ -1,4 +1,5 @@
 using System;
+using Domain.ValueObjects;
 
 namespace API.UserControllers.Messages
 {
@@ -6,9 +7,9 @@ namespace API.UserControllers.Messages
     {
         public Guid Id { get; set; }
 
-        public UserCreatedResponse(Guid id)
+        public UserCreatedResponse(UserId id)
         {
-            this.Id = id;
+            this.Id = new Guid(id.Value);
         }
     }
 }

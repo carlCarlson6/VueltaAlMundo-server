@@ -14,7 +14,7 @@ namespace MongoRepository.UserRepo
 
         public UserModel(User user)
         {
-            this.id = user.Id.ToString();
+            this.id = user.Id.Value;
             this.email = user.Email.Value;
             this.name = user.Name.Value;
             this.password = user.Password.Value;

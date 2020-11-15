@@ -5,12 +5,12 @@ namespace Domain.Entities
 {
     public class User
     {
-        public Guid Id { get; }
+        public UserId Id { get; }
         public Email Email { get; } 
         public Name Name { get; }
         public Password Password { get; }
     
-        public User(Guid id, Email email, Name name, Password password)
+        public User(UserId id, Email email, Name name, Password password)
         {
             this.Id = id;
             this.Email = email;
@@ -20,7 +20,7 @@ namespace Domain.Entities
 
         public static User Create(String email, String name, String password)
         {
-            return new User(Guid.NewGuid(), new Email(email), new Name(name), new Password(password));
+            return new User(new UserId(), new Email(email), new Name(name), new Password(password));
         }
 
     }

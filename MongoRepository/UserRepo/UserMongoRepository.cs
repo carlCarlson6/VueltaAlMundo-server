@@ -31,7 +31,7 @@ namespace MongoRepository.UserRepo
                 return new List<User>();
             }
 
-            return usersModel.Select(userModel => new User(new Guid(userModel.id), new Email(userModel.email), new Name(userModel.name), new Password(new EncryptedPassword(userModel.password)))).ToList();
+            return usersModel.Select(userModel => new User(new UserId(userModel.id), new Email(userModel.email), new Name(userModel.name), new Password(new EncryptedPassword(userModel.password)))).ToList();
         }
 
         public async Task<User> Read(Guid id)
@@ -44,7 +44,7 @@ namespace MongoRepository.UserRepo
                 return null;
             }
             
-            return new User(new Guid(userFound.id), new Email(userFound.email), new Name(userFound.name), new Password(new EncryptedPassword(userFound.password)));
+            return new User(new UserId(userFound.id), new Email(userFound.email), new Name(userFound.name), new Password(new EncryptedPassword(userFound.password)));
         }
 
         public async Task<User> Read(Email email)
@@ -57,7 +57,7 @@ namespace MongoRepository.UserRepo
                 return null;
             }
                 
-            return new User(new Guid(userFound.id), new Email(userFound.email), new Name(userFound.name), new Password(new EncryptedPassword(userFound.password)));
+            return new User(new UserId(userFound.id), new Email(userFound.email), new Name(userFound.name), new Password(new EncryptedPassword(userFound.password)));
         }
 
         public async Task<int> Save(User user)
