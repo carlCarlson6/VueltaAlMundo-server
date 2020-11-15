@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Application.AuthDTOs;
 using Application.AuthUseCases;
+using Domain.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.AuthControllers
@@ -16,8 +17,8 @@ namespace API.AuthControllers
         [HttpPost]
         public async Task<UserLogedResponse> LoginUser([FromBody] LoginCommand loginCommand)
         {
-            await this.login.Execute(loginCommand);
-            throw new NotImplementedException();
+            AuthToken authToken = await this.login.Execute(loginCommand);
+            return new UserLogedResponse(authToken);
         }
     }
 }
