@@ -10,14 +10,12 @@ using Microsoft.Extensions.Logging;
 namespace API.UserControllers
 {
     [ApiController]
-    [Route("api/user")]
-    public class PostUserController : ControllerBase
+    [Route("api/users")]
+    public class PostUsersController : ControllerBase
     {
-        private readonly ILogger<PostUserController> logger;
         private readonly CreateUser create;
-        public PostUserController(ILogger<PostUserController> logger, CreateUser createUser)
+        public PostUsersController(CreateUser createUser)
         {
-            this.logger = logger;
             this.create = createUser;
         }
 

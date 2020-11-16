@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.RecordControllers
 {
     [ApiController]
-    [Route("api/record")]
-    public class PostRecordController : ControllerBase
+    [Route("api/records")]
+    public class PostRecordsController : ControllerBase
     {
         private readonly CreateRecord create;
-        public PostRecordController(CreateRecord createRecord)
+        public PostRecordsController(CreateRecord createRecord)
         {
             this.create = createRecord;
         }

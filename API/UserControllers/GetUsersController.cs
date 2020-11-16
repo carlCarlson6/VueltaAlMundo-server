@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Application.UserUseCases;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using API.UserControllers.Messages;
@@ -14,15 +13,13 @@ using Domain.ValueObjects;
 namespace API.UserControllers
 {
     [ApiController]
-    [Route("api/user")]
-    public class GetUserController : ControllerBase
+    [Route("api/users")]
+    public class GetUsersController : ControllerBase
     {
-        private readonly ILogger<GetUserController> logger;
         private readonly ListAllUsers allUsers;
         private readonly GetUser getUser;
-        public GetUserController(ILogger<GetUserController> logger, ListAllUsers allUsers, GetUser getUser)
+        public GetUsersController(ListAllUsers allUsers, GetUser getUser)
         {
-            this.logger = logger;
             this.allUsers = allUsers;
             this.getUser = getUser;
         }
