@@ -17,7 +17,7 @@ namespace Domain.Services
             User user = await this.userRepository.Read(id);
 
             if(user == null)
-                throw new UserNotFoundException(nameof(Guid), id.ToString());
+                throw new EntityNotFoundException(nameof(User), nameof(Guid), id.Value);
 
             return user;
         }
@@ -27,7 +27,7 @@ namespace Domain.Services
             User user = await this.userRepository.Read(email);
 
             if(user == null)
-                throw new UserNotFoundException(nameof(Email), email.Value);
+                throw new EntityNotFoundException(nameof(User), nameof(Email), email.Value);
 
             return user;
         }
