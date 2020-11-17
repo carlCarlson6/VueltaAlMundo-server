@@ -13,7 +13,6 @@ namespace MongoRepository.UserRepo
     public class UserMongoRepository : IUserRepository
     {
         private readonly IMongoCollection<UserModel> collection;
-
         public UserMongoRepository(IMongoRepositorySettings<UserModel> settings)
         {
             MongoClient client = new MongoClient(settings.ConnectionString);
