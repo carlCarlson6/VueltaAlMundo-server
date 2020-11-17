@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Entities;
@@ -12,7 +13,6 @@ namespace MongoRepository.RecordRepro
     public class RecordMongoRepository : IRecordRepository
     {
         private readonly IMongoCollection<RecordModel> collection;
-
         public RecordMongoRepository(IMongoRepositorySettings<RecordModel> settings)
         {
             MongoClient client = new MongoClient(settings.ConnectionString);
@@ -20,24 +20,38 @@ namespace MongoRepository.RecordRepro
             this.collection = database.GetCollection<RecordModel>(settings.CollectionName);         
         }
 
-        public Task<List<Record>> Read()
+        public async Task<List<Record>> Read()
         {
+            IAsyncCursor<RecordModel> asyncCursor = await this.collection.FindAsync(model => true);
+            List<RecordModel> recordsModel = await asyncCursor.ToListAsync();
+
+            if(recordsModel.Count == 0)
+            {
+                return new List<Record>();
+            }
+
+            // TODO
+            //return recordsModel.Select(recordModel => new Record()).ToList();
             throw new NotImplementedException();
         }
 
         public Task<Record> Read(RecordId id)
         {
+            // TODO
             throw new NotImplementedException();
         }
 
         public Task<List<Record>> Read(UserId id)
         {
+            // TODO
             throw new NotImplementedException();
         }
 
-        public Task<int> Save(Record record)
+        public async Task<int> Save(Record record)
         {
-            throw new NotImplementedException();
+            RecordModel model = new RecordModel(record);
+            await this.collection.InsertOneAsync(model);
+            return 201;
         }
     }
 }
