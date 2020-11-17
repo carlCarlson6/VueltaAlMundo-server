@@ -49,17 +49,26 @@ namespace API
         }
         public void ConfigureUseCases(IServiceCollection services)
         {
+            services.AddSingleton<Login>();
+
+            services.AddSingleton<CreateRecord>();
+            services.AddSingleton<GetRecord>();
+            services.AddSingleton<ListAllRecords>();
+            services.AddSingleton<SumAllRecords>();
+
             services.AddSingleton<CreateUser>();
-            services.AddSingleton<ListAllUsers>();
             services.AddSingleton<GetUser>();
-            services.AddSingleton<Login>();    
-            services.AddSingleton<CreateRecord>();        
+            services.AddSingleton<ListAllUsers>();
+            services.AddSingleton<ListUserRecords>();
+            services.AddSingleton<SumUserRecords>();
         }
         public void ConfigureDomain(IServiceCollection services)
         {
+            services.AddSingleton<CheckUserAlreadyExists>();
             services.AddSingleton<IUserRepository, UserMongoRepository>();
+            services.AddSingleton<RecordFinder>();
+            services.AddSingleton<SumRecords>();
             services.AddSingleton<UserFinder>();
-            services.AddSingleton<CheckNewUser>();
         }
         public void ConfigureJwtAuthentication(IServiceCollection services)
         {
