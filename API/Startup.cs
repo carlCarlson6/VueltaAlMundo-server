@@ -66,6 +66,7 @@ namespace API
         {
             services.AddSingleton<CheckUserAlreadyExists>();
             services.AddSingleton<IUserRepository, UserMongoRepository>();
+            services.AddSingleton<IRecordRepository, RecordMongoRepository>();
             services.AddSingleton<RecordFinder>();
             services.AddSingleton<SumRecords>();
             services.AddSingleton<UserFinder>();
