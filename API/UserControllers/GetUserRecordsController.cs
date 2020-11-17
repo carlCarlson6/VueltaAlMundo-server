@@ -7,6 +7,7 @@ using Application.UserUseCases;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Domain.ValueObjects;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.UserControllers
 {
@@ -24,7 +25,8 @@ namespace API.UserControllers
         }
 
         [HttpGet("/{id}/records")]
-        public async Task<IEnumerable<RecordDTO>> Get(Guid id)
+        [AllowAnonymous]
+        public async Task<IEnumerable<RecordDTO>> Get([FromRoute] Guid id)
         {
             List<Record> records = await this.listUserRecords.Execute(id);
             IEnumerable<RecordDTO> recordsDTO = records.Select(record => new RecordDTO(record));
@@ -33,7 +35,8 @@ namespace API.UserControllers
         }
 
         [HttpGet("/{id}/records/sum")]
-        public async Task<SumKilometersResult> GetSum(Guid id)
+        [AllowAnonymous]
+        public async Task<SumKilometersResult> GetSum([FromRoute] Guid id)
         {
             Kilometers sumKilometers = await this.sumUserRecords.Execute(id);
             return new SumKilometersResult(sumKilometers);

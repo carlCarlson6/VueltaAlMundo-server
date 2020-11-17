@@ -7,6 +7,7 @@ using Application.RecordUseCases;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Domain.ValueObjects;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.RecordControllers
 {
@@ -25,6 +26,7 @@ namespace API.RecordControllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IEnumerable<RecordDTO>> Get()
         {
             List<Record> records = await this.listAll.Execute();
@@ -34,13 +36,15 @@ namespace API.RecordControllers
         }
 
         [HttpGet("{id}")]
-        public async Task<RecordDTO> Get(Guid id)
+        [AllowAnonymous]
+        public async Task<RecordDTO> Get([FromRoute] Guid id)
         {
             Record record = await this.get.Execute(id);
             return new RecordDTO(record);
         }
 
         [HttpGet("{id}/sum")]
+        [AllowAnonymous]
         public async Task<SumKilometersResult> GetSum()
         {
             Kilometers kilometers = await this.sumAll.Execute();

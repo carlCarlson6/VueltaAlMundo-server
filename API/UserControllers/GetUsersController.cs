@@ -33,7 +33,7 @@ namespace API.UserControllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AllowAnonymous]
         public async Task<GetUserResponse> Get([FromRoute] Guid id)
         {
             User user = await this.getUser.Execute(new UserId(id));
