@@ -13,7 +13,7 @@ namespace API.UserControllers
 {
 
     [ApiController]
-    [Route("api/users")]
+    [Route("api/users/{id:guid}/records")] // TODO - pending test if this works
     public class GetUserRecordsController : ControllerBase
     {
         private readonly ListUserRecords listUserRecords;
@@ -24,7 +24,7 @@ namespace API.UserControllers
             this.sumUserRecords = sumUserRecords;
         }
 
-        [HttpGet("{id}/records")]
+        [HttpGet]
         [AllowAnonymous]
         public async Task<IEnumerable<RecordDTO>> Get([FromRoute] Guid id)
         {
@@ -34,7 +34,7 @@ namespace API.UserControllers
             return recordsDTO; 
         }
 
-        [HttpGet("{id:guid}/records/sum")]
+        [HttpGet("sum")]
         [AllowAnonymous]
         public async Task<SumKilometersResult> GetSum(Guid id)
         {

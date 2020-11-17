@@ -32,7 +32,7 @@ namespace API.UserControllers
             return users.Select(user => new GetUserResponse(user)).ToList();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         [AllowAnonymous]
         public async Task<GetUserResponse> Get([FromRoute] Guid id)
         {
