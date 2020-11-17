@@ -18,10 +18,12 @@ namespace Application.UserUseCases
             this.finder = userFinder;
         }
 
-        public async Task<List<Record>> Execute(UserId userId)
+        public async Task<List<Record>> Execute(Guid userId)
         {
-            await this.finder.Find(userId);
-            List<Record> userRecords = await this.repository.Read(userId);
+            UserId id = new UserId(userId);
+            await this.finder.Find(id);
+            
+            List<Record> userRecords = await this.repository.Read(id);
 
             return userRecords;
         }

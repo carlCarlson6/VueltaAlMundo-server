@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,10 +22,11 @@ namespace Application.UserUseCases
 
         public SumRecords Sum => sum;
 
-        public async Task<Kilometers> Execute(UserId userId)
+        public async Task<Kilometers> Execute(Guid userId)
         {
-            await this.userFinder.Find(userId);
-            List<Record> records = await this.recordFinder.Find(userId);
+            UserId id = new UserId(userId);
+            await this.userFinder.Find(id);
+            List<Record> records = await this.recordFinder.Find(id);
             List<Kilometers> kilometersList = records.Select(record => record.Kilometers).ToList();
             return this.Sum.Sum(kilometersList);
         }
