@@ -5,7 +5,6 @@ using Application.UserUseCases;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace API.UserControllers
 {
