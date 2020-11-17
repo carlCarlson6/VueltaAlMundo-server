@@ -9,17 +9,17 @@ namespace Application.UserUseCases
     public class CreateUser
     {
         private readonly IUserRepository repostory;
-        private readonly CheckNewUser checkNewUser;
-        public CreateUser(IUserRepository userRepository, CheckNewUser checkNewUser)
+        private readonly CheckUserAlreadyExists checkUser;
+        public CreateUser(IUserRepository userRepository, CheckUserAlreadyExists checkUserAlreadyExists)
         {
             this.repostory = userRepository;
-            this.checkNewUser = checkNewUser;
+            this.checkUser = checkUserAlreadyExists;
         }
 
         public async Task<User> Execute(CreateUserCommand command)
         {
             User newUser = User.Create(command.Email, command.Name, command.Password);
-            await this.checkNewUser.Check(newUser);
+            await this.checkUser.Check(newUser);
 
             await this.repostory.Save(newUser);
 

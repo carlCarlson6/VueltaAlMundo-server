@@ -5,10 +5,10 @@ using Domain.Repositories;
 
 namespace Domain.Services
 {
-    public class CheckNewUser
+    public class CheckUserAlreadyExists
     {
         private readonly IUserRepository repository;
-        public CheckNewUser(IUserRepository userRepo) => this.repository = userRepo;
+        public CheckUserAlreadyExists(IUserRepository userRepo) => this.repository = userRepo;
 
         public async Task Check(User user)
         {
