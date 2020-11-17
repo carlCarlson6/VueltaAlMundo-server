@@ -24,7 +24,7 @@ namespace API.UserControllers
             this.sumUserRecords = sumUserRecords;
         }
 
-        [HttpGet("/{id}/records")]
+        [HttpGet("{id}/records")]
         [AllowAnonymous]
         public async Task<IEnumerable<RecordDTO>> Get([FromRoute] Guid id)
         {
@@ -34,9 +34,9 @@ namespace API.UserControllers
             return recordsDTO; 
         }
 
-        [HttpGet("/{id}/records/sum")]
+        [HttpGet("{id:guid}/records/sum")]
         [AllowAnonymous]
-        public async Task<SumKilometersResult> GetSum([FromRoute] Guid id)
+        public async Task<SumKilometersResult> GetSum(Guid id)
         {
             Kilometers sumKilometers = await this.sumUserRecords.Execute(id);
             return new SumKilometersResult(sumKilometers);
