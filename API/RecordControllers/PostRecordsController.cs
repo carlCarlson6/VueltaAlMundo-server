@@ -1,4 +1,3 @@
-using System.Net;
 using System.Threading.Tasks;
 using API.RecordControllers.Messages;
 using Application.RecordDTOs;
