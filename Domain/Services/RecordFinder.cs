@@ -17,8 +17,7 @@ namespace Domain.Services
             List<Record> records = await this.repo.Read();
             if(records.Count == 0)
             {
-                // TODO - create exception
-                throw new System.NotImplementedException();
+                throw new EntitiesNotFoundException(nameof(Record));
             }
             return records;
         }
@@ -38,8 +37,7 @@ namespace Domain.Services
             List<Record> records = await this.repo.Read(id);
             if(records.Count == 0)
             {
-                // TODO - create exception
-                throw new System.NotImplementedException();
+                throw new EntitiesNotFoundException(nameof(Record));
             }
             return records;
         }
