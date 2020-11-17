@@ -7,7 +7,7 @@ namespace Domain.Repositories
         String id { get; set; }
         String userId { get; set; }
         Double kilometers { get; set; }
-        DateTime CreatedAt { get; set; }
-        DateTime StoredAt { get; set; }
+        DateTime createdAt { get; set; }
+        DateTime storedAt { get; set; }
     }
 }
