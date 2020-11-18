@@ -30,21 +30,33 @@ namespace MongoRepository.RecordRepro
                 return new List<Record>();
             }
 
-            // TODO
-            //return recordsModel.Select(recordModel => new Record()).ToList();
-            throw new NotImplementedException();
+            return recordsModel.Select(recordModel => new Record(new RecordId(recordModel.id), new UserId(recordModel.userId), new Kilometers(recordModel.kilometers), recordModel.createdAt, recordModel.storedAt)).ToList();
         }
 
-        public Task<Record> Read(RecordId id)
+        public async Task<Record> Read(RecordId id)
         {
-            // TODO
-            throw new NotImplementedException();
+            IAsyncCursor<RecordModel> asyncCursor = await this.collection.FindAsync(model => model.id == id.Value);
+            RecordModel recordModel = await asyncCursor.FirstOrDefaultAsync();
+
+            if(recordModel == null)
+            {
+                return null;
+            }
+
+            return new Record(new RecordId(recordModel.id), new UserId(recordModel.userId), new Kilometers(recordModel.kilometers), recordModel.createdAt, recordModel.storedAt);
         }
 
-        public Task<List<Record>> Read(UserId id)
+        public async Task<List<Record>> Read(UserId id)
         {
-            // TODO
-            throw new NotImplementedException();
+            IAsyncCursor<RecordModel> asyncCursor = await this.collection.FindAsync(model => model.id == id.Value);
+            List<RecordModel> recordsModel = await asyncCursor.ToListAsync();
+
+            if(recordsModel.Count == 0)
+            {
+                return new List<Record>();
+            }
+
+            return recordsModel.Select(recordModel => new Record(new RecordId(recordModel.id), new UserId(recordModel.userId), new Kilometers(recordModel.kilometers), recordModel.createdAt, recordModel.storedAt)).ToList();
         }
 
         public async Task<int> Save(Record record)
