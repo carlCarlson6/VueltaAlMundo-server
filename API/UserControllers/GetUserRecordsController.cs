@@ -13,7 +13,7 @@ namespace API.UserControllers
 {
 
     [ApiController]
-    [Route("api/users/{id:guid}/records")] // TODO - pending test if this works
+    [Route("api/users/{id:guid}/records")]
     public class GetUserRecordsController : ControllerBase
     {
         private readonly ListUserRecords listUserRecords;
